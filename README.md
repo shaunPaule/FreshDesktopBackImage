@@ -30,7 +30,8 @@
 7.  vbe
 
 ###  maven
-```JNA
+1.  JNA
+```
 <dependency>
     <groupId>net.java.dev.jna</groupId>
     <artifactId>jna</artifactId>
@@ -44,7 +45,50 @@
     <scope>compile</scope>
 </dependency>
 ```
-
-#### 参考文档
-https://blog.csdn.net/qq_36828207/article/details/78784461
-
+2.   jdk14编译、打包
+```
+<plugin>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.8.1</version>
+    <configuration>
+        <source>14</source>
+        <target>14</target>
+    </configuration>
+</plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>2.6</version>
+    <configuration>
+        <archive>
+            <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
+                <mainClass>com.bitfly.image.tip.TipImage</mainClass>
+            </manifest>
+        </archive>
+    </configuration>
+</plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>2.10</version>
+    <executions>
+        <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+                <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+    
+    #### 参考文档
+    https://blog.csdn.net/qq_36828207/article/details/78784461
+    
+    
