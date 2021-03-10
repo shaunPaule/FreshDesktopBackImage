@@ -20,6 +20,31 @@
 需要操作文档，使用 FileChannel，RandomAccessFile
 3.  对需求3，使用 bat，vbe 写启动脚本程序，最好静默启动
 
+#### 技术
+1.  JNA
+2.  BufferImage
+3.  ImageIO
+4.  RandomAccessFile
+5.  FileChannel
+6.  bat
+7.  vbe
+
+###  maven
+``` JNA
+<dependency>
+    <groupId>net.java.dev.jna</groupId>
+    <artifactId>jna</artifactId>
+    <version>3.5.1</version>
+    <scope>compile</scope>
+</dependency>
+<dependency>
+    <groupId>net.java.dev.jna</groupId>
+    <artifactId>platform</artifactId>
+    <version>3.5.1</version>
+    <scope>compile</scope>
+</dependency>
+```
+
 #### 参考文档
 https://blog.csdn.net/qq_36828207/article/details/78784461
 
