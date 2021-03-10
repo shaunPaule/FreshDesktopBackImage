@@ -29,9 +29,9 @@
 6.  bat
 7.  vbe
 
-###  maven
+####  maven
 1.  JNA
-```
+```POM
 <dependency>
     <groupId>net.java.dev.jna</groupId>
     <artifactId>jna</artifactId>
@@ -46,7 +46,7 @@
 </dependency>
 ```
 2.   jdk14编译、打包
-```
+```POM
 <plugin>
     <artifactId>maven-compiler-plugin</artifactId>
     <version>3.8.1</version>
