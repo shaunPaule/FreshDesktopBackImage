@@ -30,7 +30,7 @@
 7.  vbe
 
 ###  maven
-``` JNA
+```JNA
 <dependency>
     <groupId>net.java.dev.jna</groupId>
     <artifactId>jna</artifactId>
