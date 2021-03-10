@@ -15,10 +15,10 @@
 3.  系统启动后，会自动将今天之后的活动记录在桌面上，暂时一天只能记录一次
 活动
 #### 实现 
-1.  对需求1，使用操作图片的api，比如 BufferImage，ImageIO
+1.  对需求1，使用操作图片的api，比如  **BufferImage，ImageIO** 
 2.  对需求2，需要一个活动文档，所以未来的活动需要添加，之前的活动需要关闭，
-需要操作文档，使用 FileChannel，RandomAccessFile
-3.  对需求3，使用 bat，vbe 写启动脚本程序，最好静默启动
+需要操作文档，使用  **FileChannel，RandomAccessFile** 
+3.  对需求3，使用  **JNA，bat，vbe**  写启动脚本程序，最好 **静默启动** 
 
 #### 技术
 1.  JNA
