@@ -114,15 +114,33 @@ public class TipImage {
                     words[arrpos] = new String(convert(lb),"UTF-8");
                 }
 
-                if(isNowWord(words)){
-                    this.doNoteImage(words);
-                    channel.write(readed,position - READED.length() - start);
+                if(this.finishProcessWithState(words,channel,readed,position,start)){
                     return;
                 }
+
                 buffer.clear();
                 lb = new ArrayList<>();
             }
         }
+    }
+
+    private boolean finishProcess(String[] words,FileChannel channel,ByteBuffer readed,long position,int start) throws IOException {
+        if(isNowWord(words)){
+            this.doNoteImage(words);
+            channel.write(readed,position - READED.length() - start);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean finishProcessWithState(String[] words,FileChannel channel,ByteBuffer readed,long position,int start) throws IOException {
+        State state = getState(words);
+        if(state == State.UNDOBEFORENOW){
+            this.doNoteImage(words);
+            channel.write(readed,position - READED.length() - start);
+            return true;
+        }
+        return state == State.DONEBEFORENOW;
     }
 
     private byte[] convert(java.util.List<Byte> lb){
@@ -139,6 +157,28 @@ public class TipImage {
         String[] dates = words[0].split("-");
         LocalDate recordDate = LocalDate.of(now.getYear(),Integer.parseInt(dates[0]),Integer.parseInt(dates[1]));
         return !now.isAfter(recordDate);
+    }
+
+    private State getState(String[] words){
+        if(words.length < 3 ) return State.NONEED;
+        boolean beforeNow = isBeforeNow(words[0]);
+        if(beforeNow){
+            if(!READED.equals(words[2]))
+                return State.UNDOBEFORENOW;
+            return State.DONEBEFORENOW;
+        }
+        return State.NONEED;
+    }
+
+    private boolean isBeforeNow(String date){
+        LocalDate now = LocalDate.now();
+        String[] dates = date.split("-");
+        LocalDate recordDate = LocalDate.of(now.getYear(),Integer.parseInt(dates[0]),Integer.parseInt(dates[1]));
+        return !now.isAfter(recordDate);
+    }
+
+    static enum State{
+        UNDOBEFORENOW,DONEBEFORENOW,NONEED
     }
 
     public static void testByteCode(String file) throws IOException {
@@ -162,9 +202,9 @@ public class TipImage {
 
     public static void main(String[] args) {
         try {
-            new TipImage().createFile(NOTE_FILE);
+            //new TipImage().createFile(NOTE_FILE);
             //new TipImage().testByteCode(NOTE_FILE);
-            //new TipImage().noteImage(NOTE_FILE);
+            new TipImage().noteImage(NOTE_FILE);
         } catch (IOException e) {
             e.printStackTrace();
         }
